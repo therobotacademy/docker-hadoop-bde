@@ -1,0 +1,25 @@
+graph LR
+  subgraph HDFS
+    datanode1["datanode1\n(HDFS DataNode)"]
+    datanode2["datanode2\n(HDFS DataNode)"]
+    datanode3["datanode3\n(HDFS DataNode)"]
+    namenode["namenode\n(HDFS NameNode)\n9870:9870"]
+  end
+  subgraph YARN / MapReduce
+    historyserver["historyserver\n(MapReduce HistoryServer)\n8188:8188"]
+    nodemanager1["nodemanager1\n(YARN NodeManager)\n8042:8042"]
+    resourcemanager["resourcemanager\n(YARN ResourceManager)\n8089:8088"]
+  end
+  namenode --> resourcemanager
+  namenode --> historyserver
+  namenode --> nodemanager1
+  namenode --> datanode1
+  namenode --> datanode2
+  namenode --> datanode3
+  datanode1 --> resourcemanager
+  datanode1 --> historyserver
+  datanode1 --> nodemanager1
+  datanode2 --> resourcemanager
+  datanode2 --> historyserver
+  datanode2 --> nodemanager1
+  datanode3 --> resourcemanager

@@ -1,0 +1,8 @@
+,service,rol,puertos,depende_de,redes
+4,datanode1,HDFS DataNode,,namenode,
+5,datanode2,HDFS DataNode,,namenode,
+6,datanode3,HDFS DataNode,,namenode,
+2,historyserver,MapReduce HistoryServer,8188:8188,"namenode, datanode1, datanode2",
+0,namenode,HDFS NameNode,9870:9870,,
+3,nodemanager1,YARN NodeManager,8042:8042,"namenode, datanode1, datanode2",
+1,resourcemanager,YARN ResourceManager,8089:8088,"namenode, datanode1, datanode2, datanode3",

@@ -1,0 +1,28 @@
+@startuml
+skinparam componentStyle rectangle
+title Arquitectura Hadoop derivada de docker-compose
+package "HDFS" {
+  ["datanode1\n(HDFS DataNode)"] as datanode1
+  ["datanode2\n(HDFS DataNode)"] as datanode2
+  ["datanode3\n(HDFS DataNode)"] as datanode3
+  ["namenode\n(HDFS NameNode)\n9870:9870"] as namenode
+}
+package "YARN / MapReduce" {
+  ["historyserver\n(MapReduce HistoryServer)\n8188:8188"] as historyserver
+  ["nodemanager1\n(YARN NodeManager)\n8042:8042"] as nodemanager1
+  ["resourcemanager\n(YARN ResourceManager)\n8089:8088"] as resourcemanager
+}
+namenode --> resourcemanager
+namenode --> historyserver
+namenode --> nodemanager1
+namenode --> datanode1
+namenode --> datanode2
+namenode --> datanode3
+datanode1 --> resourcemanager
+datanode1 --> historyserver
+datanode1 --> nodemanager1
+datanode2 --> resourcemanager
+datanode2 --> historyserver
+datanode2 --> nodemanager1
+datanode3 --> resourcemanager
+@enduml
