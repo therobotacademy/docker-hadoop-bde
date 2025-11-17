@@ -77,12 +77,12 @@ El cluster consta de los siguientes servicios (uno por contenedor):
 ```
 El siguiente diagrama muestra el orden de arranque (cada flecha indica el contenedor que ha de haber arrancado previamente):
 
-![1763053051900](image/Docker-Hadoop-explained/1763053051900.png)
+![1763053051900](../docker-hadoop-explained/image/Docker-Hadoop-explained/1763053051900.png)
 
 ### 3. Accede al contenedor `namenode`
 
 ```bash
-docker exec -it namenode bash
+docker exec -it namenode-bde bash
 ```
 
 Aquí puedes ejecutar comandos como si fuera una terminal Linux con Hadoop configurado.
@@ -116,8 +116,9 @@ Descarga el siguiente `.jar`, que contiene ejemplos precompilados de MapReduce:
 Mueve ambos archivos al directorio del repositorio y cópialos al contenedor:
 
 ```bash
-docker cp hadoop-mapreduce-examples-2.7.1-sources.jar namenode:/tmp
-docker cp el_quijote.txt namenode:/tmp
+docker cp hadoop-mapreduce-examples-2.7.1-sources.jar namenode-bde:/tmp
+cd ./DOCS/tutorial_2-el_quijote_wordcount
+docker cp el_quijote.txt namenode-bde:/tmp
 ```
 
 ### 6. Copia el archivo al sistema de archivos distribuido (HDFS)
@@ -198,8 +199,9 @@ Estos serían los totales de ventas por producto.
 
 
 ### Ejecutar el ejemplo de WordCount
-
+Desde el contenedor `namenode-bde`, donde anteriormente copiamos el bundle de Java `hadoop-mapreduce-examples-2.7.1-sources.jar` ejecutamos el programa `WordCount`:
 ```bash
+cd /tmp
 hadoop jar hadoop-mapreduce-examples-2.7.1-sources.jar org.apache.hadoop.examples.WordCount /user/root/input /user/root/output
 ```
 
@@ -234,11 +236,16 @@ Puedes acceder al dashboard de Hadoop desde tu navegador:
 🌐 [http://localhost:9870](http://localhost:9870/)
 
 Allí puedes consultar el sistema de archivos, nodos activos, y tareas ejecutadas.
+En concreto, es interesante ver que podemos acceder al sistema de archivo de Hadoop a través del navegador:
+`http://localhost:9870/explorer.html`
 
 ## Apagar el clúster
+Para el stack (docker-compose):
+```bash
+docker-compose stop
+```
 
-Cuando termines:
-
+Cuando termines, para eliminar el stack:
 ```bash
 docker-compose down
 ```
